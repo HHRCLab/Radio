@@ -5,47 +5,56 @@ import tkinter as tk
 import threading
 
 
-class box:
+class Box:
     win = tk.Tk()
 
     def __init__(self):
         self.x = x
         self.y = y
 
-    def place(self,x,y):
-        tk.Label(master=self.win, relief="sunken",bg="#ffffbf").grid(row=x, column=y,sticky="swne", columnspan=3,rowspan=5,pady=1,padx=1)
-        tk.Label(master=self.win, text="Name", bg="grey").grid(row=x, column=y, sticky="we", columnspan=3, padx=50, pady=3)
-        tk.Label(master=self.win, text="Light", bg="grey").grid(row=x+1, column=y, sticky="we", padx=3, pady=1)
-        tk.Label(master=self.win, text=f"{5}", bg="grey", anchor="w").grid(row=x+1, column=y+2, sticky="we", padx=4, pady=1)
-        tk.Label(master=self.win, text="AudioBox", bg="grey").grid(row=x+2, column=y+2, sticky="we", padx=4, pady=1)
-        tk.Button(master=self.win, text="FqSet", bg="grey", command=lambda: print(5)).grid(row=x+3, column=y+1, sticky="we", padx=1, pady=1)
-        tk.Entry(master=self.win, text="FqSetTextbox", bg="grey80").grid(row=x+3, column=y+2, sticky="we", padx=1, pady=1)
-        tk.Button(master=self.win, text="Other", bg="grey", command=lambda: print(6)).grid(row=x+4, column=y+1, sticky="we", padx=1, pady=1)
-        tk.Label(master=self.win, text="Stats", bg="grey").grid(row=x+4, column=y+2, sticky="we", padx=4, pady=4)
+    def place(self, x, y):
+        tk.Label(master=self.win, relief="sunken", bg="#ffffbf").grid(row=x, column=y, sticky="swne", columnspan=3,
+                                                                      rowspan=5, pady=1, padx=1)
+        tk.Label(master=self.win, text="Name", bg="grey").grid(row=x, column=y, sticky="we", columnspan=3, padx=50,
+                                                               pady=3)
+        tk.Label(master=self.win, text="Light", bg="grey").grid(row=x + 1, column=y, sticky="we", padx=3, pady=1)
+        tk.Label(master=self.win, text=f"{5}", bg="grey", anchor="w").grid(row=x + 1, column=y + 2, sticky="we", padx=4,
+                                                                           pady=1)
+        tk.Label(master=self.win, text="AudioBox", bg="grey").grid(row=x + 2, column=y + 2, sticky="we", padx=4, pady=1)
+        tk.Button(master=self.win, text="FqSet", bg="grey", command=lambda: print(5)).grid(row=x + 3, column=y + 1,
+                                                                                           sticky="we", padx=1, pady=1)
+        tk.Entry(master=self.win, text="FqSetTextBox", bg="grey80").grid(row=x + 3, column=y + 2, sticky="we", padx=1,
+                                                                         pady=1)
+        tk.Button(master=self.win, text="Other", bg="grey", command=lambda: print(6)).grid(row=x + 4, column=y + 1,
+                                                                                           sticky="we", padx=1, pady=1)
+        tk.Label(master=self.win, text="Stats", bg="grey").grid(row=x + 4, column=y + 2, sticky="we", padx=4, pady=4)
 
+    def init(self):
+        Box.win.mainloop()
 
-    def init():
-        box.win.mainloop()
-
-    def setSize():
-        box.win.grid_columnconfigure(0, minsize=20)
-        box.win.grid_columnconfigure(1, minsize=20)
-        box.win.grid_columnconfigure(2, minsize=20)
+    def setSize(self):
+        Box.win.grid_columnconfigure(0, minsize=20)
+        Box.win.grid_columnconfigure(1, minsize=20)
+        Box.win.grid_columnconfigure(2, minsize=20)
         ColumnMinSize = 15
-        box.win.grid_rowconfigure(0, minsize=ColumnMinSize)
-        box.win.grid_rowconfigure(1, minsize=ColumnMinSize)
-        box.win.grid_rowconfigure(2, minsize=ColumnMinSize)
-        box.win.grid_rowconfigure(3, minsize=ColumnMinSize)
-        box.win.grid_rowconfigure(4, minsize=ColumnMinSize)
+        Box.win.grid_rowconfigure(0, minsize=ColumnMinSize)
+        Box.win.grid_rowconfigure(1, minsize=ColumnMinSize)
+        Box.win.grid_rowconfigure(2, minsize=ColumnMinSize)
+        Box.win.grid_rowconfigure(3, minsize=ColumnMinSize)
+        Box.win.grid_rowconfigure(4, minsize=ColumnMinSize)
 
 
+boxforBox = []
+# for s in range(15):
+#     boxforBox.append(Box())
 
-for y in (0,5,10):
-    for x in (0,3,6,9,12):
-        box().place(y,x)
 
-box.setSize()
-box.init()
+for y in (0, 5, 10):
+    for x in (0, 3, 6, 9, 12):
+        Box().place(y, x)
+
+Box.setSize(self=Box)
+Box.init(self=Box)
 
 # window = tk.Tk()
 # window.title("Title")
@@ -56,7 +65,7 @@ box.init()
 # LevelBox = tk.Label(master=window, text=f"{6}", bg="grey", anchor="w", width=100)
 # AudioBox = tk.Label(master=window, text="AudioBox", bg="grey")
 # FqSetButton = tk.Button(master=window, text="FqSetButton", bg="grey", command=lambda: print(5))
-# FqSetTextbox = tk.Entry(master=window, text="FqSetTextbox", bg="grey80")
+# FqSetTextBox = tk.Entry(master=window, text="FqSetTextBox", bg="grey80")
 # OtherButton = tk.Button(master=window, text="OtherButton", bg="grey", command=lambda: LevelBox.grid(row=1, column=2, sticky="we"))
 # Stats = tk.Label(master=window, text="Stats", bg="grey")
 #
@@ -67,7 +76,7 @@ box.init()
 # LevelBox.grid(row=1, column=2, sticky="we")
 # AudioBox.grid(row=2, column=2, sticky="we")
 # FqSetButton.grid(row=3, column=1, sticky="we")
-# FqSetTextbox.grid(row=3, column=2, sticky="we")
+# FqSetTextBox.grid(row=3, column=2, sticky="we")
 # OtherButton.grid(row=4, column=1, sticky="we")
 # Stats.grid(row=4, column=2, sticky="we")
 #
@@ -82,4 +91,3 @@ box.init()
 # window.grid_rowconfigure(4, minsize=ColumnMinSize)
 #
 # window.mainloop()
-
