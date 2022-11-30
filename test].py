@@ -13,19 +13,19 @@ class Box:
         self.y = y
 
     def place(self, x, y):
-        tk.Label(master=self.win, relief="sunken", bg="#ffffbf").grid(row=x, column=y, sticky="swne", columnspan=3,
-                                                                      rowspan=5, pady=1, padx=1)
+        tk.Label(master=self.win, relief="sunken", bg="#ffffbf").grid(row=x, column=y, sticky="wens", columnspan=3, rowspan=5, pady=1, padx=1)
         tk.Label(master=self.win, text="Name", bg="grey").grid(row=x, column=y, sticky="we", columnspan=3, padx=50,
                                                                pady=3)
         tk.Label(master=self.win, text="Light", bg="grey").grid(row=x + 1, column=y, sticky="we", padx=3, pady=1)
         tk.Label(master=self.win, text=f"{5}", bg="grey", anchor="w").grid(row=x + 1, column=y + 2, sticky="we", padx=4,
                                                                            pady=1)
         tk.Label(master=self.win, text="AudioBox", bg="grey").grid(row=x + 2, column=y + 2, sticky="we", padx=4, pady=1)
-        tk.Button(master=self.win, text="FqSet", bg="grey", command=lambda: print(5)).grid(row=x + 3, column=y + 1,
+        tk.Button(master=self.win, text="FqSet", bg="grey", command=lambda: print(fq.get())).grid(row=x + 3, column=y + 1,
                                                                                            sticky="we", padx=1, pady=1)
-        tk.Entry(master=self.win, text="FqSetTextBox", bg="grey80").grid(row=x + 3, column=y + 2, sticky="we", padx=1,
-                                                                         pady=1)
-        tk.Button(master=self.win, text="Other", bg="grey", command=lambda: print(6)).grid(row=x + 4, column=y + 1,
+        fq = tk.Entry(master=self.win, text="FqSetTextBox", bg="grey80")
+        fq.grid(row=x + 3, column=y + 2, sticky="we", padx=1, pady=1)
+
+        tk.Button(master=self.win, text="Other", bg="grey", command=lambda: print(5)).grid(row=x + 4, column=y + 1,
                                                                                            sticky="we", padx=1, pady=1)
         tk.Label(master=self.win, text="Stats", bg="grey").grid(row=x + 4, column=y + 2, sticky="we", padx=4, pady=4)
 
@@ -47,14 +47,22 @@ class Box:
 boxforBox = []
 # for s in range(15):
 #     boxforBox.append(Box())
+# for Box in range(15):
+#     boxforBox.append(Box)
+
+while True:
+
+    for y in (0, 5, 10):
+        for x in (0, 3, 6, 9, 12):
+            # a = Box()
+            # a.place(y, x)
+            # boxforBox.append(a)
+            # a.init()
+            Box().place(y, x)
 
 
-for y in (0, 5, 10):
-    for x in (0, 3, 6, 9, 12):
-        Box().place(y, x)
-
-Box.setSize(self=Box)
-Box.init(self=Box)
+    Box.setSize(self=Box)
+    Box.init(self=Box)
 
 # window = tk.Tk()
 # window.title("Title")
