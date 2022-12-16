@@ -13,7 +13,9 @@ class App(ctk.CTk):
         self.Frame.grid(row=0, column=0)
         self.Frame1 = ArduinoFrame(self)
         self.Frame1.grid(row=0, column=1)
-        self.Frame1.LevelUpdate()
+
+    def UpdateLevel(self, data):
+        self.Frame1.LevelUpdate(data)
 
 
 class ArduinoFrame(ctk.CTkFrame):
@@ -48,13 +50,14 @@ class ArduinoFrame(ctk.CTkFrame):
     def switchLight(cls, button, imgs):
         button.configure(image=next(imgs))
 
-    def LevelUpdate(self):
+    def LevelUpdate(self, d=10):
+
         self.after(500, self.LevelUpdate)
-        self.SignalLevel.configure(text=f"{random.randint(1, 34)}")
+        self.SignalLevel.configure(text=f"{d}")
 
 
 
 
-
-app = App()
-app.mainloop()
+#
+# app = App()
+# app.mainloop()
