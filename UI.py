@@ -14,23 +14,21 @@ class App(ctk.CTk):
         self.Frame1 = ArduinoFrame(self)
         self.Frame1.grid(row=0, column=1)
 
-    def UpdateLevel(self, data):
-        self.Frame1.LevelUpdate(data)
-
 
 class ArduinoFrame(ctk.CTkFrame):
 
     def __init__(self, *args, Name="DefaultName", IP="192.168.1.1", Port=5050, **kwargs):
+        self.updateData = 0
         self.test = [3, 5, 3, 4, 4, 4, 4, 3, 3, 3, 4, 3, 4, 4, 4, 4, 5, 4, 5, 4, 5, 4, 3, 5]
         super().__init__(*args, **kwargs)
 
         self.Name = ctk.CTkLabel(self, text=f"{Name} | {IP} | {Port}")
         self.Name.grid(row=0, column=0, columnspan=2)
 
-        self.GreenCircle = ctk.CTkImage(light_image=Image.open("./GreenLight-removebg-preview.png"))
-        self.RedCircle = ctk.CTkImage(light_image=Image.open("./RedCircle-removebg-preview.png"))
-        self.YellowCircle = ctk.CTkImage(light_image=Image.open("./YellowCircle-removebg-preview.png"))
-        self.GreyCircle = ctk.CTkImage(light_image=Image.open("./GreyCircle-removebg-preview.png"))
+        self.GreenCircle = ctk.CTkImage(light_image=Image.open("Img/GreenLight-removebg-preview.png"))
+        self.RedCircle = ctk.CTkImage(light_image=Image.open("Img/RedCircle-removebg-preview.png"))
+        self.YellowCircle = ctk.CTkImage(light_image=Image.open("Img/YellowCircle-removebg-preview.png"))
+        self.GreyCircle = ctk.CTkImage(light_image=Image.open("Img/GreyCircle-removebg-preview.png"))
         self.Lights = [self.GreyCircle, self.RedCircle, self.YellowCircle, self.GreyCircle]
         self.lightIter = iter(self.Lights)
 
@@ -40,24 +38,19 @@ class ArduinoFrame(ctk.CTkFrame):
         self.SignalLevel = ctk.CTkLabel(self, text=f"{self.test}")
         self.SignalLevel.grid(row=1, column=1)
 
-        self.FqButton = ctk.CTkButton(self, text="FqSet", command=lambda: self.switchLight(button=self.button, imgs=self.lightIter))
+        # self.FqButton = ctk.CTkButton(self, text="FqSet", command=lambda: self.switchLight(button=self.button, imgs=self.lightIter))
+        self.FqButton = ctk.CTkButton(self, text="FqSet", command=lambda: self.LevelUpdate())
         self.FqButton.grid(row=2, column=0)
 
         self.FqEntry = ctk.CTkEntry(self)
         self.FqEntry.grid(row=2, column=1)
 
+
+
     @classmethod
     def switchLight(cls, button, imgs):
         button.configure(image=next(imgs))
 
-    def LevelUpdate(self, d=10):
-
-        self.after(500, self.LevelUpdate)
-        self.SignalLevel.configure(text=f"{d}")
-
-
-
-
-#
-# app = App()
-# app.mainloop()
+    def LevelUpdate(self):
+        self.after(2000, self.LevelUpdate)
+        self.SignalLevel.configure(text=f"{self.updateData}")
