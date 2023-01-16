@@ -11,8 +11,10 @@ class App(ctk.CTk):
         super().__init__()
         self.Frame = ArduinoFrame(self)
         self.Frame.grid(row=0, column=0)
+        self.Frame.LevelUpdate()
         self.Frame1 = ArduinoFrame(self)
         self.Frame1.grid(row=0, column=1)
+        self.Frame1.LevelUpdate()
 
 
 class ArduinoFrame(ctk.CTkFrame):

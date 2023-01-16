@@ -28,17 +28,17 @@ time.sleep(1)
 
 
 class gui():
-
-
-    def GUI(self):
+    def __init__(self):
         self.ui = UI.App()
-        self.ui.Frame1.LevelUpdate()
-        self.ui.mainloop()
 
     def GUIUpdate(self, data):
-        while True:
-            self.ui.Frame1.updateData = data
-            time.sleep(1)
+
+        self.ui.Frame1.updateData = data
+
+
+    def go(self):
+        self.ui.mainloop()
+
 
 
 
@@ -50,6 +50,10 @@ def main1():
         print(f"Received data:{list(data)[:6]} from {addr}\n")
         rf = list(data)[:6]
 
+def two():
+    while True:
+        wind.GUIUpdate(rf)
+
 
 
 if __name__ == "__main__":
@@ -57,10 +61,12 @@ if __name__ == "__main__":
     threading.Thread(target=main1).start()
     # threading.Thread(target=wind.GUI).start()
     # wind.GUIUpdate(rf)
+
     wind = gui()
-    wind.GUI()
-    wind.GUIUpdate(rf)
-    print(1)
+    # wind.GUI()
+    threading.Thread(target=two).start()
+    wind.go()
+
 
     # threading.Thread(target=main1).start()
     # threading.Thread(target=gui().GUI).start()
