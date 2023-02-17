@@ -1,84 +1,56 @@
-import builtins
 import random
 import socket
 import time
-import tkinter as tk
 import threading
-import UI
-
-def SetFq():
-    print(FqSetTextbox.get())
-    pass
-
+from flask import Flask, render_template, url_for
 
 # Udp related stuff
-#       variables
+# variables
 IP = "192.168.1.10"
-ArduinoIP = "192.168.1.65"
 PORT = 5050
+arduinolist = [("192.168.1.66", PORT), ("192.168.1.65", PORT)]
+socketlist = []
 bufferSize = 64
+rf = 1
+massage = "a9"
 
 
 udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+for i in range(len(arduinolist)):
+    udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    udp.bind((IP, PORT+i+1))
+    socketlist.append(udp)
 
-udp.bind((IP, PORT))
-massage = "a9"
-udp.sendto(massage.encode(encoding="utf=8"), (ArduinoIP, PORT))
+
+for i in range(len(arduinolist)):
+    socketlist[i].sendto(massage.encode(encoding="utf=8"), arduinolist[i])
+    socketlist[i].sendto(massage.encode(encoding="utf=8"), arduinolist[i])
 time.sleep(1)
 
 
-class gui():
-    def __init__(self):
-        self.ui = UI.App()
-
-    def GUIUpdate(self, data):
-
-        self.ui.Frame1.updateData = data
-
-
-    def go(self):
-        self.ui.mainloop()
-
-
-
-
-rf = 1
 def main1():
     global rf
     while True:
-        data, addr = udp.recvfrom(bufferSize)
-        print(f"Received data:{list(data)[:6]} from {addr}\n")
-        rf = list(data)[:6]
+        for sock in socketlist:
+            data, addr = sock.recvfrom(bufferSize)
+            print(f"Received data:{list(data)[:6]} from {addr}\n")
+            rf = list(data)[:6]
 
-def two():
-    while True:
-        wind.GUIUpdate(rf)
 
+def web():
+
+    app = Flask(__name__)
+
+    @app.route("/")
+    def home():
+        return render_template('Home.html', rf=rf)
+
+    app.run()
 
 
 if __name__ == "__main__":
-
+    threading.Thread(target=web).start()
     threading.Thread(target=main1).start()
-    # threading.Thread(target=wind.GUI).start()
-    # wind.GUIUpdate(rf)
-
-    wind = gui()
-    # wind.GUI()
-    threading.Thread(target=two).start()
-    wind.go()
 
 
-    # threading.Thread(target=main1).start()
-    # threading.Thread(target=gui().GUI).start()
-    # threading.Thread(target=gui().GUIUpdate, args=(rf,)).start()
 
-
-    # rf = Udp_data()
-    # # rf.main1()
-    # # print(rf.rf1)
-    # threading.Thread(target=rf.main1(udp), daemon=True).start()
-    # threading.Thread(target=GUI, args=(4,)).start()
-
-    # rf = Udp_data()
-    # rf.main1(udp)
-    # print(rf.rf1)

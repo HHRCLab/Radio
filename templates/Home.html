@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='javascript/script.js') }}"></script>
+    <meta charset="UTF-8">
+    <title>Radio</title>
+
+</head>
+<body>
+
+    <div class="frame">
+
+        <table>
+            <tr><th>Kentronakan</th> <th id='radio'>{{rf}}</th> <th><img src="GreenLight.png"></th>
+                <th> <button onclick="update()" title="efe"></button></th> </tr>
+        </table>
+
+    </div>
+
+
+</body>
+</html>
