@@ -10,20 +10,20 @@
 </head>
 <body class="body">
 
+{% for n in range(0, rflen) %}
     <div class="frame">
-
         <table id="table">
             <div class="table-div">
                 <tr>
                     <th id="text">Kentronakan</th> 
-                    <th id='radio'>{{rf}}</th>
+                    <th id='radio'>{{rf[n]}}</th>
                     <th id="button"> <button onclick="update()" title="efe"></button></th>
                     <th id="link"> <a href="https://www.google.com">link</a></th>
                 </tr>
             </div>
         </table>
-
     </div>
+{% endfor %}
 
 
 </body>
