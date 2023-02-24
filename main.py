@@ -13,6 +13,7 @@ socketlist = []
 bufferSize = 128
 rf = [1, 1]
 massage = "a9"
+status = {"192.168.1.66": 1, "192.168.1.65": 1}
 
 
 def sendmsgagain(tup):
@@ -60,7 +61,11 @@ def web():
 
     @app.route("/")
     def home():
-        return render_template('Home.html', rf=rf, rflen=len(rf))
+        return render_template('Home.html', rf=rf, rflen=len(rf), status=status)
+
+    @app.route("/get_rf")
+    def get_rf():
+        return str(rf)
 
     app.run()
 

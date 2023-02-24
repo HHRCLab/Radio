@@ -3,25 +3,31 @@
 <head>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script type="text/javascript" src="{{ url_for('static', filename='javascript/script.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='javascript/update.js') }}"></script>
     <meta charset="UTF-8">
     <title>Radio</title>
 
 </head>
 <body class="body">
 
+    <div>
+        <h3 id="heading"> Kentronakan </h3>
+    </div>
+
 {% for n in range(0, rflen) %}
-    <div class="frame">
-        <table id="table">
-            <div class="table-div">
-                <tr>
-                    <th id="text">Kentronakan</th> 
-                    <th id='radio'>{{rf[n]}}</th>
-                    <th id="button"> <button onclick="update()" title="efe"></button></th>
-                    <th id="link"> <a href="https://www.google.com">link</a></th>
-                </tr>
-            </div>
-        </table>
+    <div class="column">
+        <ul id="list">
+            <li id="img">
+                <img src="static/Img/Green.png", alt="OK", width="35", height="35">
+            </li>
+            <li id="name"> 
+                <h5> Vedi </h5>
+            </li>
+            <li id="RF">
+                <h6 id="rf{{n}}"> {{rf[n]}} </h6>
+            </li>
+        </ul>
+
     </div>
 {% endfor %}
 
