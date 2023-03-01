@@ -1,18 +1,12 @@
-window.addEventListener('load', () => {
-  let currentValue = document.getElementById('rf').innerHTML;  // get the initial value of the variable
-  console.log('Initial value:', currentValue);
+function iconf(){
+  for (var i = status.length - 1; i >= 0; i--) {
+      if (status == true) {
+        document.getElementById("icon").setAttribute("src", "static/Icons/100%.png");
+      } else {
+        document.getElementById("icon").setAttribute("src", "static/Icons/50%.png");
+      }
+  }
+    
+}
 
-  setInterval(() => {
-    let newValue = document.getElementById('rf').innerHTML;  // get the current value of the variable
-    console.log('New value:', newValue);
-    if (newValue == currentValue) {
-      console.log('Value has not changed');
-    } else {
-      currentValue = newValue;
-      document.getElementById('rf').innerHTML = currentValue;  // update the text of the HTML element
-      console.log('Updated value:', currentValue);
-    }
-  }, 1000);
-});
-
-
+setInterval(iconf, 1000);

@@ -17,8 +17,11 @@
 {% for n in range(0, rflen) %}
     <div class="column">
         <ul id="list">
-            <li id="img">
-                <img src="static/Img/Green.png", alt="OK", width="35", height="35">
+            <li>
+                <img id="icon" src="static/Icons/75%.png", alt="OK", width="35", height="35">
+            </li>
+            <li id="li">
+                <img id="light" src="static/Img/Yellow.png",>
             </li>
             <li id="name"> 
                 <h5> Vedi </h5>
@@ -31,6 +34,11 @@
     </div>
 {% endfor %}
 
-
 </body>
+
+<script type="text/javascript" src="{{ url_for('static', filename='javascript/script.js') }}">
+    let status = {{status|tojson}};
+</script>
+
+    
 </html>
