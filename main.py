@@ -20,6 +20,7 @@ status = {"0": True, "1": True}
 
 
 
+
 def sendmsgagain(tup):
     x = list(arduinolist.keys())
     socket.socket(socket.AF_INET, socket.SOCK_DGRAM).sendto(massage.encode(encoding="utf=8"), (x[tup], arduinolist[x[0]][0]))
@@ -46,6 +47,10 @@ def changestatus(tup,state):
     print(status)
 
 
+def openlogs():
+    logs = open("logs.txt", "rt")
+    return logs.read()
+
 
 def main1(level):
     global rf
@@ -64,6 +69,9 @@ def main1(level):
                 except socket.timeout:
                     print(f"{sock.getsockname()} timed out")
                     changestatus(count, False)
+                    logs = open("logs.txt", "a")
+                    logs.write(f"{time.ctime(1672215379.5045543)}:{sock.getsockname()} is not responding\r")
+                    logs.close()
                     sendmsgagain(count)
                     continue
 
@@ -79,9 +87,17 @@ def web():
     def home():
         return render_template('Home.html', rf=rf, rflen=len(rf), status=status)
 
-    @app.route("/get_rf")
+    @app.route("/get_rf", methods=["GET"])
     def get_rf():
         return str(rf)
+
+    @app.route("/get_status", methods=["GET"])
+    def get_status():
+        return str(status)
+
+    @app.route("/logs")
+    def logs():
+        return render_template("Logs.html", logs=openlogs())
 
     app.run()
 

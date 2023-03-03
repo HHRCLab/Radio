@@ -18,16 +18,14 @@
     <div class="column">
         <ul id="list">
             <li>
-                <img id="icon" src="static/Icons/75%.png", alt="OK", width="35", height="35">
-            </li>
-            <li id="li">
-                <img id="light" src="static/Img/Yellow.png",>
+                <img id="icon{{n}}" src="static/Icons/75%.png", alt="OK", width="35", height="35">
             </li>
             <li id="name"> 
                 <h5> Vedi </h5>
             </li>
             <li id="RF">
                 <h6 id="rf{{n}}"> {{rf[n]}} </h6>
+                <h6 id="test"> null </h6>
             </li>
         </ul>
 
@@ -37,7 +35,6 @@
 </body>
 
 <script type="text/javascript" src="{{ url_for('static', filename='javascript/script.js') }}">
-    let status = {{status|tojson}};
 </script>
 
     
