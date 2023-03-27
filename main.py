@@ -2,7 +2,7 @@ import random
 import socket
 import time
 import threading
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, jsonify
 
 # Udp related stuff
 # variables
@@ -10,12 +10,9 @@ IP = "192.168.1.10"
 PORT = 5050
 arduinolist = {"192.168.1.66": (PORT, PORT+1), "192.168.1.65": (PORT, PORT+2)}
 socketlist = []
-bufferSize = 128
+bufferSize = 32
 rf = [1, 1]
 massage = "a9"
-green = 12
-yellow = 6
-red = 2
 # status = [x.status for x in socketlist] 
 TimeOut = 7
 
@@ -29,30 +26,40 @@ class Arduino:
         self.udp.bind((IP, self.RCVPORT))
         self.udp.settimeout(TimeOut)
         self.udp.sendto(massage.encode(encoding="utf=8"), (self.IP, PORT))
+        self.tempudp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         
-
+        
     def changeStatus(self, state):
         self.status = state
         print(f"{self.IP}:{self.status}")
 
 
     def sendmsg(self):
-        socket.socket(socket.AF_INET, socket.SOCK_DGRAM).sendto(massage.encode(encoding="utf=8"), (self.IP, PORT))
+        self.tempudp.sendto(massage.encode(encoding="utf=8"), (self.IP, PORT))
         print("resent")
 
 
+    
 
 
-for i in range(0, 2):
-    socketlist.append(Arduino(f"192.168.1.6{5+i}", PORT+1+i))
+# init
+socketlist.append(Arduino("192.168.1.65", 5051))
+socketlist.append(Arduino("192.168.1.66", 5052))
 
 
 def openlogs():
     logs = open("logs.txt", "rt")
     return logs.read()
 
-def status():
-    return str([x.status for x in socketlist])
+
+def tostr():
+    for x in socketlist:
+        print(x.IP,x.RCVPORT)
+
+def logto(id):
+    logs = open("logs.txt", "a")
+    logs.write(f"{time.ctime(1672215379.5045543)}:{id} is not responding\r")
+    logs.close()
 
 
 
@@ -68,15 +75,16 @@ def main1(level):
                     data, addr = sock.udp.recvfrom(bufferSize)
                     temp = list(data)[:6]
                     rf[count] = round(sum(temp) / len(temp))
+                    sock.changeStatus(True)
                     print(f"Received data:{rf[count]} from {addr}\n")
+                    tostr()
+
                     
 
                 except socket.timeout:
                     print(f"{sock.udp.getsockname()} timed out")
                     sock.changeStatus(False)
-                    logs = open("logs.txt", "a")
-                    logs.write(f"{time.ctime(1672215379.5045543)}:{sock.udp.getsockname()} is not responding\r")
-                    logs.close()
+                    logto(sock.udp.getsockname())
                     sock.sendmsg()
                     continue
 
@@ -90,7 +98,7 @@ def web():
 
     @app.route("/")
     def home():
-        return render_template('Home.html', rf=rf, rflen=len(rf), status=status)
+        return render_template('Home.html', rf=rf, rflen=len(rf))
 
     @app.route("/logs")
     def logs():
@@ -98,11 +106,11 @@ def web():
     
     @app.route("/get_rf", methods=["GET"])
     def get_rf():
-        return str(rf)
+        return jsonify(rf)
 
-    @app.route("/get_status", methods=["GET"])
+    @app.route("/get_status", methods=["GET"]) 
     def get_status():
-        return str(status)
+        return jsonify([x.status for x in socketlist])
 
     app.run()
 

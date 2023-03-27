@@ -1,21 +1,28 @@
 function updateRf() {
   // Send an AJAX request to the server to get the new value of "rf"
   var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
 
-  for(let i=0;i<2;i++) {
-    if(this.readyState == 4 && this.status == 200){
-      document.getElementById("rf"+i).innerHTML = JSON.parse(this.responseText)[i];
-      console.log("fff");
-      }
-    }
-  }
-  
   try {
     xhttp.open("GET", "/get_rf", true);
     xhttp.send();
   } catch(Error) {
     console.log("Error during AJAX request:", Error);
+  }
+
+
+  xhttp.onreadystatechange = function() {
+  let rfList = JSON.parse(this.responseText);
+  for(let i=0;i<2;i++) {
+    if(this.readyState == 4 && this.status == 200){
+      document.getElementById("rf"+i).innerHTML = rfList[i];
+      console.log("fff");
+      }
+    if(rfList[i] < 8){
+      document.getElementById("icon"+i).setAttribute("src","static/Icons/50%.png");
+    }else{
+      document.getElementById("icon"+i).setAttribute("src","static/Icons/100%.png");
+    }
+    }
   }
 }
 
