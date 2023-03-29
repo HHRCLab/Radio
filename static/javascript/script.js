@@ -24,7 +24,10 @@ function iconf(){
     if (this.readyState == 4 && this.status == 200) {
       var iconStates = JSON.parse(this.responseText);
       for(let i=0;i<2;i++){
-        document.getElementById("test"+i).innerText = iconStates[i];
+        // document.getElementById("test"+i).innerText = iconStates[i];
+        if(iconStates[i] == false){
+          document.getElementById("icon"+i).setAttribute("src", "static/Icons/no connection2.png");
+        }
       }
     }
   }

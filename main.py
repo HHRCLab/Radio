@@ -8,12 +8,11 @@ from flask import Flask, render_template, url_for, jsonify
 # variables
 IP = "192.168.1.10"
 PORT = 5050
-arduinolist = {"192.168.1.66": (PORT, PORT+1), "192.168.1.65": (PORT, PORT+2)}
+# arduinolist = {"192.168.1.66": (PORT, PORT+1), "192.168.1.65": (PORT, PORT+2)}
 socketlist = []
 bufferSize = 32
 rf = [1, 1]
 massage = "a9"
-# status = [x.status for x in socketlist] 
 TimeOut = 7
 
 
@@ -39,8 +38,6 @@ class Arduino:
         print("resent")
 
 
-    
-
 
 # init
 socketlist.append(Arduino("192.168.1.65", 5051))
@@ -58,7 +55,7 @@ def tostr():
 
 def logto(id):
     logs = open("logs.txt", "a")
-    logs.write(f"{time.ctime(1672215379.5045543)}:{id} is not responding\r")
+    logs.write(f"{time.ctime(1672215379.5045543)}:{id.IP}:{id.RCVPORT} is not responding\r")
     logs.close()
 
 
@@ -68,23 +65,19 @@ def main1(level):
     while True:
         for sock in socketlist:
             if sock.udp:
-                # count = sock.udp.getsockname()[1] % 5051
                 count = socketlist.index(sock)
                 try:
-                    print("in")
                     data, addr = sock.udp.recvfrom(bufferSize)
                     temp = list(data)[:6]
                     rf[count] = round(sum(temp) / len(temp))
                     sock.changeStatus(True)
                     print(f"Received data:{rf[count]} from {addr}\n")
-                    tostr()
-
-                    
+                    # tostr()
 
                 except socket.timeout:
-                    print(f"{sock.udp.getsockname()} timed out")
+                    print(f"{sock.IP,sock.RCVPORT} timed out")
                     sock.changeStatus(False)
-                    logto(sock.udp.getsockname())
+                    logto(sock)
                     sock.sendmsg()
                     continue
 
@@ -112,12 +105,10 @@ def web():
     def get_status():
         return jsonify([x.status for x in socketlist])
 
+
     app.run()
 
 
 if __name__ == "__main__":
     threading.Thread(target=web).start()
     threading.Thread(target=lambda: main1(level=rf)).start()
-
-
-

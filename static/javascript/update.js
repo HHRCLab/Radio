@@ -17,11 +17,17 @@ function updateRf() {
       document.getElementById("rf"+i).innerHTML = rfList[i];
       console.log("fff");
       }
-    if(rfList[i] < 8){
-      document.getElementById("icon"+i).setAttribute("src","static/Icons/50%.png");
-    }else{
+
+    if(rfList[i] < 11){
+      document.getElementById("icon"+i).setAttribute("src","static/Icons/75%Y.png");
+    }if(rfList[i] < 8){
+      document.getElementById("icon"+i).setAttribute("src","static/Icons/50%Y.png");
+    }if(rfList[i] < 5){
+      document.getElementById("icon"+i).setAttribute("src","static/Icons/25%R.png");
+    }if(rfList[i] > 11){
       document.getElementById("icon"+i).setAttribute("src","static/Icons/100%.png");
     }
+
     }
   }
 }
