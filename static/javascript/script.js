@@ -33,5 +33,5 @@ function iconf(){
   }
 }
 
-setInterval(iconf, 5000);
+setInterval(iconf, 3000);
 

@@ -21,10 +21,12 @@ class Arduino:
         self.IP = ip
         self.RCVPORT = port
         self.status = False
+
         self.udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.udp.bind((IP, self.RCVPORT))
         self.udp.settimeout(TimeOut)
         self.udp.sendto(massage.encode(encoding="utf=8"), (self.IP, PORT))
+        
         self.tempudp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         
         
@@ -66,16 +68,17 @@ def main1(level):
         for sock in socketlist:
             if sock.udp:
                 count = socketlist.index(sock)
-                try:
+                try:            
                     data, addr = sock.udp.recvfrom(bufferSize)
-                    temp = list(data)[:6]
-                    rf[count] = round(sum(temp) / len(temp))
+                    rf[count] = round(sum(list(data)[:6]) / len(list(data)[:6]))
                     sock.changeStatus(True)
+
                     print(f"Received data:{rf[count]} from {addr}\n")
                     # tostr()
 
                 except socket.timeout:
                     print(f"{sock.IP,sock.RCVPORT} timed out")
+
                     sock.changeStatus(False)
                     logto(sock)
                     sock.sendmsg()
@@ -110,5 +113,5 @@ def web():
 
 
 if __name__ == "__main__":
-    threading.Thread(target=web).start()
     threading.Thread(target=lambda: main1(level=rf)).start()
+    threading.Thread(target=web).start()

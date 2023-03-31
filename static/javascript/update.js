@@ -33,4 +33,4 @@ function updateRf() {
 }
 
 // Update "rf" every 5 seconds
-setInterval(updateRf, 5000);
+setInterval(updateRf, 2500);
