@@ -1,0 +1,13 @@
+version: '3'
+services:
+  my-service:
+    image: v3
+    networks:
+      my-network:
+        ipv4_address: 192.168.1.10
+networks:
+  my-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24

@@ -53,7 +53,7 @@ def openlogs():
 
 def tostr():
     for x in socketlist:
-        print(x.IP,x.RCVPORT)
+        print(x.IP, x.RCVPORT)
 
 def logto(id):
     logs = open("logs.txt", "a")
