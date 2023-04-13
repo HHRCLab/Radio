@@ -10,7 +10,7 @@ RUN pip3 install -r requirements.txt
 
 EXPOSE 5000
 EXPOSE 5050
-EXPOSE 5051
-EXPOSE 5052
+EXPOSE 50000
+EXPOSE 50001
 
 CMD [ "python3", "main.py" ]

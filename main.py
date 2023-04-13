@@ -10,7 +10,7 @@ IP = "192.168.1.10"
 PORT = 5050
 # arduinolist = {"192.168.1.66": (PORT, PORT+1), "192.168.1.65": (PORT, PORT+2)}
 socketlist = []
-bufferSize = 32
+bufferSize = 8
 rf = [1, 1]
 massage = "a9"
 TimeOut = 7
@@ -42,8 +42,8 @@ class Arduino:
 
 
 # init
-socketlist.append(Arduino("192.168.1.65", 5051))
-socketlist.append(Arduino("192.168.1.66", 5052))
+socketlist.append(Arduino("192.168.1.20", 50000))
+socketlist.append(Arduino("192.168.1.21", 50001))
 
 
 def openlogs():
@@ -75,7 +75,7 @@ def main1(level):
 
                     print(f"Received data:{rf[count]} from {addr}\n")
                     # tostr()
-
+                    
                 except socket.timeout:
                     print(f"{sock.IP,sock.RCVPORT} timed out")
 
