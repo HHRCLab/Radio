@@ -42,8 +42,8 @@ class Arduino:
 
 
 # init
-socketlist.append(Arduino("192.168.1.20", 50000))
-socketlist.append(Arduino("192.168.1.21", 50001))
+# socketlist.append(Arduino("192.168.1.20", 50000))
+# socketlist.append(Arduino("192.168.1.21", 50000))
 
 
 def openlogs():
