@@ -39,6 +39,17 @@ class Arduino:
         self.tempudp.sendto(massage.encode(encoding="utf=8"), (self.IP, PORT))
         print("resent")
 
+    def sendfq(self,msg,fqlength):
+        msgtosend = "Fq:" + str(fqlength) +str(msg)
+        self.tempudp.sendto(msgtosend.encode(encoding="utf=8"), (self.IP, PORT))
+    
+    def reset(self):
+        msg = "RST"
+        self.tempudp.sendto(msg.encode(encoding="utf=8"), (self.IP, PORT))
+
+
+    
+
 
 
 # init
@@ -76,6 +87,9 @@ def main1(level):
                     print(f"Received data:{rf[count]} from {addr}\n")
                     # tostr()
                     
+                    # sock.sendfq(1030,4)
+                    # sock.reset()
+                    
                 except socket.timeout:
                     print(f"{sock.IP,sock.RCVPORT} timed out")
 
@@ -86,6 +100,7 @@ def main1(level):
 
             else:
                 print("f")
+
 
 
 def web():
