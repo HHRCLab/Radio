@@ -22,7 +22,13 @@
                 <img id="icon{{n}}" src="static/Icons/75%.png", alt="OK", width="35", height="35">
             </li>
             <li id="name"> 
-                <h5> Vedi </h5>
+                {%if n == 0%}
+                    <h5> Nano </h5>
+                {%endif%}
+                {%if n == 1%}
+                    <h5> Uno </h5>
+                {%endif%}
+                
             </li>
             <li id="RF">
                 <h6 id="rf{{n}}"> {{rf[n]}} </h6>
