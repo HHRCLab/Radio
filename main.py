@@ -6,14 +6,14 @@ from flask import Flask, render_template, url_for, jsonify
 
 # Udp related stuff
 # variables
-IP = "192.168.1.10"
+IP = "192.168.10.10"
 PORT = 5050
 # arduinolist = {"192.168.1.66": (PORT, PORT+1), "192.168.1.65": (PORT, PORT+2)}
 socketlist = []
 bufferSize = 8
 rf = [1, 1]
 massage = "a9"
-TimeOut = 7
+TimeOut = 5
 
 
 class Arduino:
@@ -29,7 +29,7 @@ class Arduino:
         
         self.tempudp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         
-        
+         
     def changeStatus(self, state):
         self.status = state
         print(f"{self.IP}:{self.status}")
@@ -53,8 +53,8 @@ class Arduino:
 
 
 # init
-socketlist.append(Arduino("192.168.1.20", 50000))
-socketlist.append(Arduino("192.168.1.21", 50001))
+socketlist.append(Arduino("192.168.10.23", 50005))
+socketlist.append(Arduino("192.168.10.24", 50001))
 
 
 def openlogs():
@@ -81,13 +81,14 @@ def main1(level):
                 count = socketlist.index(sock)
                 try:            
                     data, addr = sock.udp.recvfrom(bufferSize)
-                    rf[count] = round(sum(list(data)[:6]) / len(list(data)[:6]))
+                    rf[count] = round(sum(list(data)[1:7]) / len(list(data)[1:7]))
                     sock.changeStatus(True)
-
+                    
                     print(f"Received data:{rf[count]} from {addr}\n")
+                    print(f"Fq: {list(data)}")
                     # tostr()
                     
-                    # sock.sendfq(1030,4)
+                    # sock.sendfq(1030,4) 76-108
                     # sock.reset()
                     
                 except socket.timeout:
@@ -100,7 +101,7 @@ def main1(level):
 
             else:
                 print("f")
-
+            
 
 
 def web():

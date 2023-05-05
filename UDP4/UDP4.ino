@@ -6,13 +6,17 @@
 ///////////////////////////////////////////
 
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
-IPAddress ArduinoIP(192, 168, 1, 21);
-IPAddress ServerIP(192, 168, 1, 10);
+IPAddress ArduinoIP(192, 168, 10, 23);
+IPAddress ArduinoDNS(192, 168, 10, 1);
+IPAddress ArduinoGateway(192, 168, 10, 254);
+IPAddress ArduinoMask(255, 255, 255, 0);
+
+IPAddress ServerIP(192, 168, 10, 10);
 unsigned int localPort = 5050;
 EthernetUDP Udp;
 
 TEA5767N radio = TEA5767N();
-float frequency = 92.5;
+float frequency = 102.5;
 
 char packetBuffer[UDP_TX_PACKET_MAX_SIZE];
 
@@ -22,7 +26,7 @@ void(* resetFunc) (void) = 0;
 void setup() {
   Serial.begin(9600);
 
-  Ethernet.begin(mac, ArduinoIP);
+  Ethernet.begin(mac, ArduinoIP, ArduinoDNS, ArduinoGateway, ArduinoMask);
   Udp.begin(localPort);
  
   radio.selectFrequency(frequency);
@@ -48,7 +52,7 @@ void loop() {
   Serial.print("Station selected: ");
   Serial.print(radio.readFrequencyInMHz(),1);
   Serial.println(" MHz");
- 
+  
   memset(b, 0, 6);
   for (int i = 0; i < 6; i++) {
     b[i] = radio.getSignalLevel();
@@ -80,7 +84,7 @@ void loop() {
 
 
 void sendUDP(byte data[]) {
-  Udp.beginPacket(ServerIP, 50001);
+  Udp.beginPacket(ServerIP, 50005);
   Udp.write(data,6);
   Udp.endPacket();
 }
