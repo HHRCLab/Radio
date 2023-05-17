@@ -1,6 +1,6 @@
 import random
 import socket
-import time
+from datetime import datetime
 import threading
 from flask import Flask, render_template, url_for, jsonify
 
@@ -53,8 +53,8 @@ class Arduino:
 
 
 # init
-socketlist.append(Arduino("192.168.10.23", 50005))
-socketlist.append(Arduino("192.168.10.24", 50001))
+socketlist.append(Arduino("192.168.10.23", 50001))
+socketlist.append(Arduino("192.168.10.27", 50002))
 
 
 def openlogs():
@@ -68,7 +68,8 @@ def tostr():
 
 def logto(id):
     logs = open("logs.txt", "a")
-    logs.write(f"{time.ctime(1672215379.5045543)}:{id.IP}:{id.RCVPORT} is not responding\r")
+    now = datetime.now().strftime("%m.%d.%Y, %H:%M:%S")
+    logs.write(f"{now} | {id.IP}:{id.RCVPORT} is not responding\r")
     logs.close()
 
 
@@ -125,7 +126,7 @@ def web():
         return jsonify([x.status for x in socketlist])
 
 
-    app.run()
+    app.run(host="0.0.0.0", port=5000)
 
 
 if __name__ == "__main__":

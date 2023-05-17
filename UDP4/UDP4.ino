@@ -6,7 +6,7 @@
 ///////////////////////////////////////////
 
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
-IPAddress ArduinoIP(192, 168, 10, 23);
+IPAddress ArduinoIP(192, 168, 10, 27);
 IPAddress ArduinoDNS(192, 168, 10, 1);
 IPAddress ArduinoGateway(192, 168, 10, 254);
 IPAddress ArduinoMask(255, 255, 255, 0);
@@ -16,7 +16,7 @@ unsigned int localPort = 5050;
 EthernetUDP Udp;
 
 TEA5767N radio = TEA5767N();
-float frequency = 102.5;
+float frequency = 103.4;
 
 char packetBuffer[UDP_TX_PACKET_MAX_SIZE];
 
@@ -84,7 +84,7 @@ void loop() {
 
 
 void sendUDP(byte data[]) {
-  Udp.beginPacket(ServerIP, 50005);
+  Udp.beginPacket(ServerIP, 50002);
   Udp.write(data,6);
   Udp.endPacket();
 }
