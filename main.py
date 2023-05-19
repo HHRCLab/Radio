@@ -6,7 +6,8 @@ from flask import Flask, render_template, url_for, jsonify
 
 # Udp related stuff
 # variables
-IP = "192.168.10.10"
+IP = "0.0.0.0"
+MulticastIP = '239.0.0.1'
 PORT = 5050
 # arduinolist = {"192.168.1.66": (PORT, PORT+1), "192.168.1.65": (PORT, PORT+2)}
 socketlist = []
@@ -54,7 +55,7 @@ class Arduino:
 
 # init
 socketlist.append(Arduino("192.168.10.23", 50001))
-socketlist.append(Arduino("192.168.10.27", 50002))
+# socketlist.append(Arduino("192.168.10.27", 50002))
 
 
 def openlogs():
